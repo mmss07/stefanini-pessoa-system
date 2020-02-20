@@ -105,7 +105,7 @@ public class ServicoPessoaApi implements Serializable{
 		try {
 			String url = "https://mmss20200712.herokuapp.com/pessoas/cpf/"+cpf;
 			String output = getConection(url,"GET");
-			Gson gson = new Gson();
+			Gson gson = new  GsonBuilder().registerTypeAdapter(Date.class, new GsonUTCDateAdapter()).create();
 			Type collectionType = new TypeToken<List<Pessoa>>() {}.getType();
 		    listaDePessoas = gson.fromJson(output, collectionType);
 		    		   
@@ -120,7 +120,7 @@ public class ServicoPessoaApi implements Serializable{
 		try {
 			String url = "https://mmss20200712.herokuapp.com/pessoas/"+id;
 			String output = getConection(url,"GET");
-			Gson gson = new Gson();
+			Gson gson = new  GsonBuilder().registerTypeAdapter(Date.class, new GsonUTCDateAdapter()).create();
 			Type retorno = new TypeToken<Pessoa>() {}.getType();
 		    pessoa = gson.fromJson(output, retorno);
 		    		   
@@ -134,8 +134,23 @@ public class ServicoPessoaApi implements Serializable{
 		Pessoa pessoa = new Pessoa();		
 		try {
 			String url = "https://mmss20200712.herokuapp.com/pessoas/"+id;
-			String output = getConection(url,"DELETE");
-			Gson gson = new Gson();
+			String output = getConection(url,"DELETE");			
+			Gson gson = new  GsonBuilder().registerTypeAdapter(Date.class, new GsonUTCDateAdapter()).create();	
+			Type retorno = new TypeToken<Pessoa>() {}.getType();
+		    pessoa = gson.fromJson(output, retorno);
+		    		   
+		} catch (IOException ex) {
+			ex.fillInStackTrace();
+		}		
+		return pessoa;		
+	}
+	
+	public Pessoa alterar(Long id){
+		Pessoa pessoa = new Pessoa();		
+		try {
+			String url = "https://mmss20200712.herokuapp.com/pessoas/"+id;
+			String output = getConection(url,"PUT");			
+			Gson gson = new  GsonBuilder().registerTypeAdapter(Date.class, new GsonUTCDateAdapter()).create();	
 			Type retorno = new TypeToken<Pessoa>() {}.getType();
 		    pessoa = gson.fromJson(output, retorno);
 		    		   
@@ -155,9 +170,11 @@ public class ServicoPessoaApi implements Serializable{
 	            request.setDoInput(true);	            
 	            request.setRequestProperty("Content-Type", "application/json");
 	            request.setRequestMethod("POST");
-	            request.connect();	           
-	            OutputStream outputStream = request.getOutputStream();
-	            outputStream.write(json.getBytes("UTF-8"));
+	            request.connect();	    
+	            
+	            try (OutputStream outputStream = request.getOutputStream()) {
+	                outputStream.write(json.getBytes("UTF-8"));
+	            }
 	          
 	            return readResponse(request);
 	        } finally {
@@ -170,17 +187,14 @@ public class ServicoPessoaApi implements Serializable{
 	}
 
 	private String readResponse(HttpURLConnection request) throws IOException {
-	    ByteArrayOutputStream os = null;
-	    try {
-	    	InputStream is = request.getInputStream();
+		ByteArrayOutputStream os;
+	    try (InputStream is = request.getInputStream()) {
 	        os = new ByteArrayOutputStream();
 	        int b;
 	        while ((b = is.read()) != -1) {
 	            os.write(b);
 	        }
-	    }catch (Exception e) {
-			// TODO: handle exception
-		}
+	    }
 	    return new String(os.toByteArray());
 	}	
 	

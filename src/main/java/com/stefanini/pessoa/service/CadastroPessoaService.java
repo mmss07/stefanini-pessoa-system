@@ -17,12 +17,16 @@ public class CadastroPessoaService implements Serializable{
 	private ServicoPessoaApi servicoFipeApi;
 		
 	
-	@Transactional
 	public void Salvar(Pessoa pessoa) throws Exception{	
 		//pessoa.setId(nextId());
 		servicoFipeApi.salvar(pessoa);			
 	}
 		
+	public Pessoa alterar(Pessoa pessoa) {		
+		servicoFipeApi.alterar(pessoa.getId());
+		return pessoa;
+	}
+	
 	public Long nextId(){				 
 		return servicoFipeApi.nextId();
 		

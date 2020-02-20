@@ -12,7 +12,6 @@ import javax.inject.Named;
 import com.stefanini.pessoa.model.Pessoa;
 import com.stefanini.pessoa.model.Usuario;
 import com.stefanini.pessoa.service.CadastroPessoaService;
-import com.stefanini.pessoa.util.StringUtil;
 import com.stefanini.pessoa.util.jsf.FacesUtil;
 
 
@@ -54,14 +53,16 @@ public class CadastroPessoaBean implements Serializable{
 	
 	public void salvar(){		
 		try {	
-			if(pessoa != null && pessoa.getCpf() != null) {
-				pessoa.setId(new Long(2));
+			if(pessoa != null && pessoa.getCpf() != null && pessoa.getId() == null) {
+				pessoa.setId(new Long(3));
 				//if(true) {					
 					cadastroPessoaService.Salvar(pessoa);
 				//}else {
 					FacesUtil.addErrorMessage("Cpf inválido a pessoa!");
 				//}				
-			}		
+			}else {
+				cadastroPessoaService.alterar(pessoa);
+			}
 		}catch (Exception e) {
 			FacesUtil.addErrorMessage("ERRO ao Salvar a pessoa!");
 		}

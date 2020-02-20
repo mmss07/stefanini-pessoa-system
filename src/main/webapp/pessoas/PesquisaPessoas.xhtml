@@ -66,13 +66,18 @@
 				pattern="dd/MM/yyyy" readonlyInput="true" navigator="false"
 				pages="1" mode="popup" locale="pt" />
 	    		
-	    		<p:column style="width: 100px; text-align: center">	    				    		
+	    		<p:column style="width: 100px; text-align: center">	 
+	    			<p:button icon="ui-icon-pencil" title="Editar"  outcome="/pessoas/CadastroPessoa">
+	    				<f:param name="pessoa" value="#{pessoa.id}"/>
+	    			</p:button>
+	    			<p:spacer width="20" height="20" />   				    		
 	    			<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()" process="@this"
 						update=":frmPesquisa:confirmacaoExclusaoDialog">
 	    				<f:setPropertyActionListener target="#{pesquisaPessoasBean.pessoaselecionado}" 
 	    						value="#{pessoa}"/>	    				
 	    			</p:commandButton>
 	    		</p:column>
+	    		
 	    	</p:dataTable>
 	    	<p:confirmDialog header="Exclusão de Usuários"
 	    	 message="Tem certeza que deseja excluir esse pessoa #{pesquisaPessoasBean.pessoaselecionado.nome}?"
@@ -83,12 +88,7 @@
 	    		
 	    	</p:confirmDialog>
 	    	<script>       
-        function upperTextNome() {        	
-        	document.getElementById("frmPesquisa:model").value = document.getElementById("frmPesquisa:model").value.toUpperCase();
-        }
-        function upperTextEmail() {        	
-        	document.getElementById("frmPesquisa:manufacturer").value = document.getElementById("frmPesquisa:manufacturer").value.toLowerCase();
-        }
+        
     </script>
     	</h:form>
     </ui:define>

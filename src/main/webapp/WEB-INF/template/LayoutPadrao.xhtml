@@ -9,13 +9,12 @@
 	<h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><ui:insert name="titulo">Seleção Stefanini - Controle de Pessoas</ui:insert></title>
-        <h:outputStylesheet library="css" name="sistema.css" />
-        <h:outputScript library="js" name="jquery.maskMoney.js"/>
+        <h:outputStylesheet library="css" name="sistema.css" />        
 	</h:head>
 
 	<h:body>
 			
-		<p:ajaxStatus styleClass="ajax-status" onsuccess="configurarMoeda()">
+		<p:ajaxStatus styleClass="ajax-status">
 <!-- 			<f:facet name="start"> -->
 <!-- 				<h:graphicImage library="imagens" name="loading.gif"/> -->
 <!-- 			</f:facet> -->
@@ -68,17 +67,7 @@
 		Seleção Stefanini - Controle de Pessoas
 		<a href="https://stefanini.com/pt-br" target="_blank">www.stefanini.com</a>
 	</footer>
-	
-	<script>
-			function configurarMoeda() {
-				$(".moeda").maskMoney({ decimal: ",", thousands: ".", allowZero: true });
-			}
-			
-			$(document).ready(function() {
-				configurarMoeda();
-			});
-		</script>
-	
+
 	
 	</h:body>
 	
