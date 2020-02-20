@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:o ="http://omnifaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <ui:define name="titulo">Seleção Stefanini</ui:define>
+        <h:outputStylesheet library="css" name="sistema.css"/>
+        
+    </h:head>
+    <f:metadata>
+   		<o:viewParam name="usuario" value="#{loginBean.usuario}" />
+   		<f:event listener="#{loginBean.inicializar}" type="preRenderView" />
+   	</f:metadata>
+    <h:body>
+    	<header>
+			<div>
+				<h:link>
+					<h:graphicImage library="imagens" name="pessoas.png" width="90px" height="50px" />
+				</h:link>
+			</div>
+		</header>
+    	<div id="login-dialog">
+    		<h1>Login</h1>
+    		<p:messages autoUpdate="true" closable="true"/>
+    		<h:form id="frm">
+    			<h:panelGrid columns="2" styleClass="grid-login">
+    				<p:outputLabel value="Login" />
+    				<p:inputText size="30" value="#{loginBean.usuario.login}"/>
+    				
+    				<p:outputLabel value="Senha"/>
+    				<p:password size="30" value="#{loginBean.usuario.senha}"/>
+    				
+    				<h:panelGroup/>
+    				<p:commandButton icon="ui-icon-unlocked"
+                            value="Entrar"
+                                  action="#{loginBean.validaLogin}" />
+    			</h:panelGrid>
+    		</h:form>
+    	</div>
+    	 <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <footer>
+		Seleção Stefanini - Controle de Pessoas
+		<a href="https://stefanini.com/pt-br" target="_blank">www.stefanini.com</a>
+	</footer>
+    </h:body>
+   
+</html>

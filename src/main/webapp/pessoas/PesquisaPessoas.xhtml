@@ -1,0 +1,80 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Pesquisa de Pessoas</ui:define>
+    <f:metadata>
+   		<f:viewParam name="dummy" />
+   		<f:event listener="#{pesquisaPessoasBean.inicializar}" type="preRenderView" />
+   	</f:metadata>
+    <ui:define name="corpo">
+    	
+    	<h:form id="frmPesquisa">
+	    	<h1>Pesquisa de Pessoas</h1>
+	    	<p:messages autoUpdate="true" closable="true"/>
+	    	<p:toolbar style="margin-top: 20px">
+	    		<p:toolbarGroup>
+	    			<p:commandButton value="Pesquisar" id="pesquisar" action="#{pesquisaPessoasBean.pesquisa}" update="@form" 
+	    			icon="ui-icon-search"/>
+	    		</p:toolbarGroup>
+	    		<p:toolbarGroup align="right">
+	    			<p:button value="Novo" outcome="CadastroPessoa" />
+	    		</p:toolbarGroup>
+	    		
+	    	</p:toolbar>
+	    	
+	    	<p:panelGrid columns="4" id="painel" style="width: 100%; margin-top: 20px"
+	    			columnClasses="rotulo, campo">	    			    	
+	    			    			    	
+	    	</p:panelGrid>
+	    	
+	    	<p:dataTable id="pessoasTable" value="#{pesquisaPessoasBean.pessoasFiltrados}" var="pessoa"
+	    		style="margin-top: 20px" emptyMessage="Nenhum pessoa encontrado." rows="20"
+	    		paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" sortOrder="true">
+	    			    		
+	    		<p:column headerText="Nome" sortBy="#{pessoa.nome}" width="250px">
+	    			<h:outputText value="#{pessoa.nome}"/>
+	    		</p:column>
+	    		
+	    		<p:column headerText="E-mail" sortBy="#{pessoa.email}" width="150px">
+	    			<h:outputText value="#{pessoa.email}"/>
+	    		</p:column>
+	    		
+	    		<p:column headerText="Model Year" style="width: 100px" sortBy="#{pessoa.cpf}">
+	    			<h:outputText value="#{pessoa.cpf}"/>
+	    		</p:column>	    		
+	    		
+	    		<p:column headerText="Nascionalidade" style="width: 150px" sortBy="#{pessoa.nacionalidade}">
+	    			<h:outputText value="#{pessoa.nacionalidade}"/>
+	    		</p:column>
+	    		
+	    		<p:column style="width: 100px; text-align: center">	    				    		
+	    			<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()" process="@this"
+						update=":frmPesquisa:confirmacaoExclusaoDialog">
+	    				<f:setPropertyActionListener target="#{pesquisaPessoasBean.pessoaselecionado}" 
+	    						value="#{pessoa}"/>	    				
+	    			</p:commandButton>
+	    		</p:column>
+	    	</p:dataTable>
+	    	<p:confirmDialog header="Exclusão de Usuários"
+	    	 message="Tem certeza que deseja excluir esse pessoa #{pesquisaPessoasBean.pessoaselecionado.nome}?"
+	    		widgetVar="confirmacaoExclusao" id="confirmacaoExclusaoDialog" global="true">
+	    		<p:button value="Não" onclick="PF('confirmacaoExclusao').hide(); return false;"/>
+	    		<p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();" 
+	    			process="@this" action="#{pesquisaPessoasBean.excluir}" update=":frmPesquisa:pessoasTable"/>
+	    		
+	    	</p:confirmDialog>
+	    	<script>       
+        function upperTextNome() {        	
+        	document.getElementById("frmPesquisa:model").value = document.getElementById("frmPesquisa:model").value.toUpperCase();
+        }
+        function upperTextEmail() {        	
+        	document.getElementById("frmPesquisa:manufacturer").value = document.getElementById("frmPesquisa:manufacturer").value.toLowerCase();
+        }
+    </script>
+    	</h:form>
+    </ui:define>
+</ui:composition>

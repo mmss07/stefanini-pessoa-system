@@ -1,0 +1,101 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:o ="http://omnifaces.org/ui">
+
+    <ui:define name="titulo">#{cadastroCarroBean.editando ? 'Edição de Carro' : 'Novo Carro'}</ui:define>
+    <f:metadata>
+    		<o:viewParam name="carro" value="#{cadastroCarroBean.carro}" />
+    		<f:event listener="#{cadastroCarroBean.inicializar}" type="preRenderView" />
+    	</f:metadata>
+    <style>
+       .sem-bordas td {
+           border: none;
+           padding: 5px;
+       }
+    </style>	
+      	
+    <ui:define name="corpo">
+    	
+    	<h:form id="frm">
+	    	<h1>#{cadastroCarroBean.editando ? 'Edição de Carro' : 'Novo Carro'}</h1>
+	    	
+	    	<p:messages autoUpdate="true" closable="true"/>
+	    		    		    	
+	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
+	    			columnClasses="rotulo, Appcampo">	
+	    			    			    		
+	    		
+	    		<p:outputLabel value="Fabricante" for="marca"/>
+	    		 <p:selectOneMenu id="marca" value="#{cadastroCarroBean.marca}" required="true"
+					converter="marca" var="i" filter="true" filterMatchMode="startsWith">
+					
+					<p:ajax event="change" process="@this" update="model"
+						listener="#{cadastroCarroBean.carregarModelos}" />
+					
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{cadastroCarroBean.marcas}" var="marca"
+						itemLabel="#{marca.name}" itemValue="#{marca}" />
+											
+				</p:selectOneMenu>
+				
+				
+	    		<p:outputLabel value="Modelo" for="model"/>  	    		  	    		
+	    		
+				<p:selectOneMenu id="model" value="#{cadastroCarroBean.carro.model}" required="true">
+	    			<f:selectItem itemLabel="Selecione" />
+	    			<f:selectItems value="#{cadastroCarroBean.modelos}" var="modelo" 
+	        			itemLabel="#{modelo.name}" itemValue="#{modelo.name}" />
+				</p:selectOneMenu>
+				
+				
+				
+	    		  
+	    		<p:outputLabel value="Ano do Modelo" for="modelyear"/>
+	    		<p:inputText id="modelyear" size="10" maxlength="4" required="true" 
+	    		value="#{cadastroCarroBean.carro.modelyear}" rendered="true"/>  
+	    		
+	    		<p:outputLabel value="Categoria" for="category"/>	    		
+	    		 <p:selectOneMenu id="category" value="#{cadastroCarroBean.carro.category}" required="true">
+	    			<f:selectItem itemLabel="Selecione" />
+	    			<f:selectItems value="#{cadastroCarroBean.categorias}" var="categoria" 
+	        			itemLabel="#{categoria}" itemValue="#{categoria}" />
+				</p:selectOneMenu> 
+				
+				<p:outputLabel value="Valor diário dia da semanal" for="weekday"/>
+    			<p:inputText id="weekday" size="10" maxlength="10" styleClass="moeda" rendered="true"
+    			value="#{cadastroCarroBean.carro.weekdayaux}"/>
+    			
+    			<p:outputLabel value="Valor diário fim de semana" for="weekendday"/>
+    			<p:inputText id="weekendday" size="10" maxlength="10" styleClass="moeda" rendered="true"
+    			value="#{cadastroCarroBean.carro.weekenddayaux}"/>	
+    			
+    			<p:outputLabel value="Valor diário semanal (Cli. Fidelidade)" for="weekdayloyalty"/>
+    			<p:inputText id="weekdayloyalty" size="10" maxlength="10" styleClass="moeda" rendered="true"
+    			value="#{cadastroCarroBean.carro.weekdayloyaltyaux}"/>
+    			
+    			<p:outputLabel value="Valor diário fim de semana (Cli. Fidelidade)" for="weekenddayloyalty"/>
+    			<p:inputText id="weekenddayloyalty" size="10" maxlength="10" styleClass="moeda" rendered="true"
+    			value="#{cadastroCarroBean.carro.weekenddayloyaltyaux}"/>				
+				
+				
+	    		
+	    	</p:panelGrid>
+	    	<p:toolbar style="margin-top: 20px">
+	    		<p:toolbarGroup>
+	    			<p:button value="Limpar" outcome="CadastroCarro"/>
+	    			<p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroCarroBean.salvar}" />
+	    			
+	    		</p:toolbarGroup>
+	    		<p:toolbarGroup align="right">
+	    			<p:button value="Pesquisa" outcome="PesquisaCarros"/>	    		
+	    		</p:toolbarGroup>
+	    	</p:toolbar>
+	    </h:form>	
+    	<script>               
+    	</script>
+    </ui:define>
+</ui:composition>

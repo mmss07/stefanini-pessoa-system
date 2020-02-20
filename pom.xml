@@ -1,0 +1,199 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.stefanini.pessoa</groupId>
+  <artifactId>PessoaSystem</artifactId>
+  <version>0.0.1-V</version>
+  <packaging>war</packaging>
+  
+  <properties>
+     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <dependencies>
+		  <!-- https://mvnrepository.com/artifact/simple-email/simple-email -->
+		
+  		<!-- Requerido para envio de e-mails -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+			<scope>compile</scope>
+		</dependency>
+  		<!-- Spring Security (autenticação e autorização) -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>3.1.4.RELEASE</version>
+		</dependency> 
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>3.1.4.RELEASE</version>
+		</dependency> 
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>3.1.4.RELEASE</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.9.8</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-annotations</artifactId>
+		    <version>2.9.6</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		    <version>2.8.5</version>
+		</dependency>
+						
+		<!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
+		<dependency>
+		    <groupId>commons-lang</groupId>
+		    <artifactId>commons-lang</artifactId>
+		    <version>2.6</version>
+		</dependency>
+						
+  		<!-- Implementacao do Bean Validation -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.0.1.Final</version>
+			<scope>compile</scope>
+		</dependency>
+  
+  		<!-- Núcleo do Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>4.2.3.Final</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<!-- Implementação de EntityManager da JPA -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.2.3.Final</version>
+			<scope>compile</scope>
+		</dependency>
+  
+  		<!-- Weld (implementação do CDI) -->
+        <dependency>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet</artifactId>
+            <version>1.1.10.Final</version>
+            <scope>compile</scope>
+        </dependency>
+		<!-- Mojarra (implementação do JSF 2) -->
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.faces</artifactId>
+			<version>2.1.17</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- PrimeFaces (biblioteca de componentes) -->
+	  <dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>5.0</version>
+			<scope>compile</scope>
+		</dependency>	  
+	  <!-- Spring Security (autenticação e autorização) -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>3.1.4.RELEASE</version>
+		</dependency> 
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>3.1.4.RELEASE</version>
+		</dependency> 
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>3.1.4.RELEASE</version>
+		</dependency>
+	  <!-- Implementacao do Bean Validation -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.0.1.Final</version>
+			<scope>compile</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>4.2.3.Final</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<!-- Implementação de EntityManager da JPA -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.2.3.Final</version>
+			<scope>compile</scope>
+		</dependency>
+		<!-- Commons Logging (abstrai a implementação de logging) -->
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.3</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.0</version>			
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
+		<dependency>
+		    <groupId>postgresql</groupId>
+		    <artifactId>postgresql</artifactId>
+		    <version>9.1-901.jdbc4</version>
+		</dependency>	
+	   <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-email -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-email</artifactId>
+		    <version>1.5</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-email -->
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-email</artifactId>
+    <version>1.2</version>
+</dependency>
+		
+		
+ </dependencies>
+  <build>
+		<finalName>PessoaSystem</finalName>
+	
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				    <artifactId>maven-war-plugin</artifactId>
+				    <version>3.1.0</version>
+				
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+				
+			</plugin>
+		</plugins>
+		
+		
+	</build>
+</project>

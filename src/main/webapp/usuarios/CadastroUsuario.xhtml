@@ -1,0 +1,75 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:o ="http://omnifaces.org/ui">
+
+    <ui:define name="titulo">#{cadastroUsuarioBean.editando ? 'Edição de Usuário' : 'Novo Usuário'}</ui:define>
+    <f:metadata>
+    		<o:viewParam name="usuario" value="#{cadastroUsuarioBean.usuario}" />
+    		<f:event listener="#{cadastroUsuarioBean.inicializar}" type="preRenderView" />
+    	</f:metadata>
+    <style>
+       .sem-bordas td {
+           border: none;
+           padding: 5px;
+       }
+    </style>	
+  
+    	
+    <ui:define name="corpo">
+    	
+    	<h:form id="frm">
+	    	<h1>#{cadastroUsuarioBean.editando ? 'Edição de Usuário' : 'Novo Usuário'}</h1>
+	    	
+	    	<p:messages autoUpdate="true" closable="true"/>
+	    		    		    	
+	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
+	    			columnClasses="rotulo, Appcampo">	    			    		
+	    			    			    		
+	    		<p:outputLabel value="Nome do usuário" for="nome"/>
+	    		<p:inputText id="nome" size="62" maxlength="60" required="true" value="#{cadastroUsuarioBean.usuario.nome}"/>
+	    		
+				<p:outputLabel value="E-mail" for="email"/>
+				<p:inputText id="email" size="60" maxlength="100" required="true" value="#{cadastroUsuarioBean.usuario.email}" 
+				onkeyup="upperTextEmail();"/>	
+				
+				<p:outputLabel value="Login" for="login"/>
+	    		<p:inputText id="login" size="22" maxlength="20" required="true" value="#{cadastroUsuarioBean.usuario.login}"/>
+							
+				<p:outputLabel value="Senha" for="senha"/>
+				<p:password id="senha" size="20" maxlength="20" required="true" value="#{cadastroUsuarioBean.usuario.senha}"
+				feedback="true" weakLabel="Fraca" goodLabel="Boa" strongLabel="Forte" promptLabel="Informe uma senha"
+				inline="false" match="confirmacaosenha"/>
+				
+				
+				<p:outputLabel value="Confirmação da senha" for="confirmacaosenha"/>
+				<p:password id="confirmacaosenha" size="20" maxlength="20" required="true"/>
+				
+				<p:outputLabel value="Cliente Fidelidade" for="fidelidade"/>
+				<p:selectBooleanCheckbox value="#{cadastroUsuarioBean.usuario.fidelidade}" itemLabel="Fidelidade"
+				id="fidelidade"/>
+	    	</p:panelGrid>
+	    	<p:toolbar style="margin-top: 20px">
+	    		<p:toolbarGroup>
+	    			<p:button value="Limpar" outcome="CadastroUsuario"/>
+	    			<p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroUsuarioBean.salvar}"/>
+	    			
+	    		</p:toolbarGroup>
+	    		<p:toolbarGroup align="right">
+	    			<p:button value="Pesquisa" outcome="PesquisaUsuarios"/>	    		
+	    		</p:toolbarGroup>
+	    	</p:toolbar>
+	    </h:form>	
+    	<script>       
+        function upperTextNome() {        	
+        	document.getElementById("frm:nome").value = document.getElementById("frm:nome").value.toUpperCase();
+        }
+        function upperTextEmail() {        	
+        	document.getElementById("frm:email").value = document.getElementById("frm:email").value.toLowerCase();
+        }
+    </script>
+    </ui:define>
+</ui:composition>
