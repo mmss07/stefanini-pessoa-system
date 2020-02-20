@@ -1,9 +1,12 @@
 package com.stefanini.pessoa.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -35,12 +38,27 @@ public class PesquisaUsuariosBean implements Serializable{
 	private Usuario usuario;
 	private Usuario usuarioselecionado;
 	private UsuarioFilter filtro;
+	
+	
 	public void inicializar() {
 		if (FacesUtil.isNotPostback()) {
+			validaSessao();
 			filtro = new UsuarioFilter();
 			pesquisaUsuarios();
 		}
 		
+	}
+	
+	public void validaSessao() {
+		try {
+			ExternalContext currentExternalContext = FacesContext.getCurrentInstance().getExternalContext();
+			Usuario usuario = (Usuario) currentExternalContext.getSessionMap().get("usuario");
+			if(usuario == null) {
+					FacesContext.getCurrentInstance().getExternalContext().redirect("../Login.xhtml");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	public List<Usuario> pesquisa() {		
 		//Manufatura materia = materias.porDescricao(filtro.getDescricao());

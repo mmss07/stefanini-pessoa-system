@@ -39,9 +39,18 @@ public class LoginBean implements Serializable{
 	public void inicializar() {
 		if (FacesUtil.isNotPostback()) {
 			usuario = new Usuario();
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("usuario");
 			System.out.println("Inicializou!");
-			
 		}		
+	}
+	
+	public String timemout() {
+		ExternalContext currentExternalContext = FacesContext.getCurrentInstance().getExternalContext();
+		Usuario usuario = (Usuario) currentExternalContext.getSessionMap().get("usuario");
+		if(usuario == null) {
+			return "Login.xhtml";
+		}
+		return "";
 	}
 	
 	public String validaLogin() {

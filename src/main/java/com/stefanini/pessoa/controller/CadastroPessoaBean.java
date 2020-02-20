@@ -1,15 +1,16 @@
 package com.stefanini.pessoa.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.stefanini.pessoa.model.Pessoa;
-import com.stefanini.pessoa.security.Sha2;
+import com.stefanini.pessoa.model.Usuario;
 import com.stefanini.pessoa.service.CadastroPessoaService;
 import com.stefanini.pessoa.util.StringUtil;
 import com.stefanini.pessoa.util.jsf.FacesUtil;
@@ -23,9 +24,6 @@ public class CadastroPessoaBean implements Serializable{
 	
 	@Inject 
 	private CadastroPessoaService cadastroPessoaService;
-
-	//@Inject
-	//private SendEmail sendEmail;
 		
 	private Pessoa pessoa;
 		
@@ -35,25 +33,35 @@ public class CadastroPessoaBean implements Serializable{
 	
 	public void inicializar() {
 		if (FacesUtil.isNotPostback()) {
+					validaSessao();
 					pessoa = new Pessoa();
 					System.out.println("Inicializou!");	
 		}		
 	}
 
+	public void validaSessao() {
+		try {
+			ExternalContext currentExternalContext = FacesContext.getCurrentInstance().getExternalContext();
+			Usuario usuario = (Usuario) currentExternalContext.getSessionMap().get("usuario");
+			if(usuario == null) {
+					FacesContext.getCurrentInstance().getExternalContext().redirect("../Login.xhtml");
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
-	
-	public void salvar() throws NoSuchAlgorithmException, UnsupportedEncodingException{		
+	public void salvar(){		
 		try {	
 			if(pessoa != null && pessoa.getCpf() != null) {
-				if(StringUtil.isCPF(pessoa.getCpf())) {
-					
+				pessoa.setId(new Long(2));
+				//if(true) {					
 					cadastroPessoaService.Salvar(pessoa);
-				}else {
+				//}else {
 					FacesUtil.addErrorMessage("Cpf inválido a pessoa!");
-				}
-				
-			}
-		
+				//}				
+			}		
 		}catch (Exception e) {
 			FacesUtil.addErrorMessage("ERRO ao Salvar a pessoa!");
 		}

@@ -1,10 +1,13 @@
 package com.stefanini.pessoa.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -22,10 +25,7 @@ public class CadastroUsuarioBean implements Serializable{
 	
 	@Inject 
 	private CadastroUsuarioService cadastroUsuarioService;
-
-	//@Inject
-	//private SendEmail sendEmail;
-		
+	
 	private Usuario usuario;
 		
 	public CadastroUsuarioBean(){
@@ -34,12 +34,23 @@ public class CadastroUsuarioBean implements Serializable{
 	
 	public void inicializar() {
 		if (FacesUtil.isNotPostback()) {
+					validaSessao();
 					usuario = new Usuario();
 					System.out.println("Inicializou!");	
 		}		
 	}
 
-	
+	public void validaSessao() {
+		try {
+			ExternalContext currentExternalContext = FacesContext.getCurrentInstance().getExternalContext();
+			Usuario usuario = (Usuario) currentExternalContext.getSessionMap().get("usuario");
+			if(usuario == null) {
+					FacesContext.getCurrentInstance().getExternalContext().redirect("../Login.xhtml");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void salvar() throws NoSuchAlgorithmException, UnsupportedEncodingException{		
 		try {

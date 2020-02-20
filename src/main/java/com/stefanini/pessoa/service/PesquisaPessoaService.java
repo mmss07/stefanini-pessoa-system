@@ -2,18 +2,16 @@ package com.stefanini.pessoa.service;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.stefanini.pessoa.model.Pessoa;
+import com.stefanini.pessoa.model.Usuario;
 import com.stefanini.pessoa.util.jpa.Transactional;
+import com.stefanini.pessoa.util.jsf.FacesUtil;
 
 public class PesquisaPessoaService implements Serializable{
 	
@@ -21,21 +19,15 @@ public class PesquisaPessoaService implements Serializable{
 	
 	@Inject
 	private ServicoPessoaApi servicoFipeApi;
-		
 	
-	@Transactional
-	public void Salvar(Pessoa pessoa) throws Exception{	
-		pessoa.setId(getNextCodigo());
-		//pessoas.salvar(pessoa);			
-	}
-		
-	public Long getNextCodigo(){				 
-		 //return pessoas.getNextCodigo();
-		return new Long(0);
+	public void inicializar() {
+		if (FacesUtil.isNotPostback()) {								
+					System.out.println("Inicializou!");	
+		}		
 	}
 	
 	public List<Pessoa> excluir(Pessoa pessoaselecionado, List<Pessoa> pessoasFiltrados) {
-		//pessoas.excluir(pessoaselecionado);
+		servicoFipeApi.delete(pessoaselecionado.getId());
 		pessoasFiltrados.remove(pessoaselecionado);
 		return pessoasFiltrados;
 	}	
@@ -44,15 +36,6 @@ public class PesquisaPessoaService implements Serializable{
 		//return pessoas.porManufacturer(manufacturer);
 		return new Pessoa();
 	}
-	
-//	public List<Marca> listaMarcas(){
-//		return servicoFipeApi.listaMarcas();
-//	}
-//	
-//	public List<Modelo> listaModelos(String modelo){
-//		return servicoFipeApi.listaModelos(modelo);
-//	}
-	
 	
 	public List<Pessoa> listaPessoas() {
 		return servicoFipeApi.listaPessoas();

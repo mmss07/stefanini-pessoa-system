@@ -1,14 +1,18 @@
 package com.stefanini.pessoa.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.stefanini.pessoa.filter.PessoaFilter;
 import com.stefanini.pessoa.model.Pessoa;
+import com.stefanini.pessoa.model.Usuario;
 import com.stefanini.pessoa.service.PesquisaPessoaService;
 import com.stefanini.pessoa.util.jsf.FacesUtil;
 
@@ -33,10 +37,24 @@ public class PesquisaPessoasBean implements Serializable{
 	private PessoaFilter filtro;
 	public void inicializar() {
 		if (FacesUtil.isNotPostback()) {
+			validaSessao();	
 			filtro = new PessoaFilter();
 			pesquisaPessoas();
 		}
 		
+	}
+	
+	public void validaSessao() {
+		try {
+			ExternalContext currentExternalContext = FacesContext.getCurrentInstance().getExternalContext();
+			Usuario usuario = (Usuario) currentExternalContext.getSessionMap().get("usuario");
+			if(usuario == null) {
+					FacesContext.getCurrentInstance().getExternalContext().redirect("../Login.xhtml");
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public List<Pessoa> pesquisa() {				
 		pessoasFiltrados.clear();

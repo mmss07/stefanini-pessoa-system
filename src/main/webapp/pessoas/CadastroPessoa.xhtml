@@ -6,7 +6,7 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:o ="http://omnifaces.org/ui">
 
-    <ui:define name="titulo">#{cadastroPessoaBean.editando ? 'Edição de Pessoa' : 'Novo Pessoa'}</ui:define>
+    <ui:define name="titulo">#{cadastroPessoaBean.editando ? 'Edição de Pessoa' : 'Nova Pessoa'}</ui:define>
     <f:metadata>
     		<o:viewParam name="pessoa" value="#{cadastroPessoaBean.pessoa}" />
     		<f:event listener="#{cadastroPessoaBean.inicializar}" type="preRenderView" />

@@ -2,8 +2,11 @@ package com.stefanini.pessoa.service;
 
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
@@ -11,7 +14,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -83,17 +85,14 @@ public class ServicoPessoaApi implements Serializable{
 		return pessoa.getId() + 1;
 	}
 	
-	public Pessoa salvar(Pessoa pessoa) {
+	public Pessoa salvar(Pessoa pessoa) throws Exception {
 		
 		try {
 			//String url = "http://localhost:8090/pessoas";
-			String url = "https://mmss20200712.herokuapp.com/pessoas";
-			  
-			String output = getConection(url,"POST");			
-			Gson gson = new  GsonBuilder().registerTypeAdapter(Date.class, new GsonUTCDateAdapter()).create();
-			
-			pessoa = gson.fromJson(output, Pessoa.class);
-
+			String url = "https://mmss20200712.herokuapp.com/pessoas";			  						
+			Gson gson = new  GsonBuilder().registerTypeAdapter(Date.class, new GsonUTCDateAdapter()).create();			
+			String pessoaJson = gson.toJson(pessoa);
+			sendPost(url, pessoaJson);
 		} catch (IOException ex) {
 			ex.fillInStackTrace();
 		} finally {
@@ -101,29 +100,19 @@ public class ServicoPessoaApi implements Serializable{
 		return pessoa;
 	}
 	
-	
-	public static void main(String[] args) {
-//		List<Pessoa> lista  = listaPessoas();
-//		for (Iterator iterator = lista.iterator(); iterator.hasNext();) {
-//			Pessoa pessoa = (Pessoa) iterator.next();
-//			System.out.println(pessoa.getNome());
-//			
-//		}
-	}
-	
 	public List<Pessoa> findByCpf(String cpf){
-		List<Pessoa> listaDeFabricantes = new ArrayList<Pessoa>();		
+		List<Pessoa> listaDePessoas = new ArrayList<Pessoa>();		
 		try {
 			String url = "https://mmss20200712.herokuapp.com/pessoas/cpf/"+cpf;
 			String output = getConection(url,"GET");
 			Gson gson = new Gson();
 			Type collectionType = new TypeToken<List<Pessoa>>() {}.getType();
-		    listaDeFabricantes = gson.fromJson(output, collectionType);
+		    listaDePessoas = gson.fromJson(output, collectionType);
 		    		   
 		} catch (IOException ex) {
 			ex.fillInStackTrace();
 		}		
-		return listaDeFabricantes;		
+		return listaDePessoas;		
 	}
 	
 	public Pessoa findById(Long id){
@@ -156,6 +145,60 @@ public class ServicoPessoaApi implements Serializable{
 		return pessoa;		
 	}
 	
+	public String sendPost(String url, String json) throws Exception {
 
+	    try {	        
+	        HttpURLConnection request = (HttpURLConnection) new URL(url).openConnection();
+	        try {
+	            
+	            request.setDoOutput(true);
+	            request.setDoInput(true);	            
+	            request.setRequestProperty("Content-Type", "application/json");
+	            request.setRequestMethod("POST");
+	            request.connect();	           
+	            OutputStream outputStream = request.getOutputStream();
+	            outputStream.write(json.getBytes("UTF-8"));
+	          
+	            return readResponse(request);
+	        } finally {
+	            request.disconnect();
+	        }
+	    } catch (IOException ex) {
+	    	ex.printStackTrace();
+	    }
+		return json;
+	}
+
+	private String readResponse(HttpURLConnection request) throws IOException {
+	    ByteArrayOutputStream os = null;
+	    try {
+	    	InputStream is = request.getInputStream();
+	        os = new ByteArrayOutputStream();
+	        int b;
+	        while ((b = is.read()) != -1) {
+	            os.write(b);
+	        }
+	    }catch (Exception e) {
+			// TODO: handle exception
+		}
+	    return new String(os.toByteArray());
+	}	
+	
+	public static void main(String[] args) {
+		
+//			Pessoa pessoa = new Pessoa();
+//			pessoa.setCpf("63606044003");
+//			//pessoa.setDataatualizacao("1581908400000");
+//			pessoa.setEmail("raquel@hotmail.com");
+//			pessoa.setId(new Long(2));
+//			pessoa.setNacionalidade("Americana");
+//			pessoa.setNaturalidade("Californiana");
+//			pessoa.setNome("Raquel Bormann");
+//			System.out.println(pessoa.getNome());
+//			Gson gson = new  GsonBuilder().registerTypeAdapter(Date.class, new GsonUTCDateAdapter()).create();
+//			String json = gson.toJson(pessoa);
+//			sendPost("https://mmss20200712.herokuapp.com/pessoas", json);
+		
+	}
 	
 }

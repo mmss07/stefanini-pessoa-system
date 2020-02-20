@@ -1,6 +1,7 @@
 package com.stefanini.pessoa.service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,7 +19,7 @@ public class CadastroPessoaService implements Serializable{
 	
 	@Transactional
 	public void Salvar(Pessoa pessoa) throws Exception{	
-		pessoa.setId(nextId());
+		//pessoa.setId(nextId());
 		servicoFipeApi.salvar(pessoa);			
 	}
 		
@@ -27,29 +28,16 @@ public class CadastroPessoaService implements Serializable{
 		
 	}
 	
-	public List<Pessoa> excluir(Pessoa pessoaselecionado, List<Pessoa> pessoasFiltrados) {
-		//pessoas.excluir(pessoaselecionado);
-		pessoasFiltrados.remove(pessoaselecionado);
-		return pessoasFiltrados;
-	}	
-	
-	public Pessoa porManufacturer(String manufacturer) {		
-		//return pessoas.porManufacturer(manufacturer);
-		return new Pessoa();
+	public List<Pessoa> findByCpf(String cpf){
+		List<Pessoa> listaDePessoas = new ArrayList<Pessoa>();		
+		try {
+			listaDePessoas = servicoFipeApi.findByCpf(cpf);
+		    		   
+		} catch (Exception ex) {
+			ex.fillInStackTrace();
+		}		
+		return listaDePessoas;		
 	}
 	
-//	public List<Marca> listaMarcas(){
-//		return servicoFipeApi.listaMarcas();
-//	}
-//	
-//	public List<Modelo> listaModelos(String modelo){
-//		return servicoFipeApi.listaModelos(modelo);
-//	}
-	
-	public Pessoa porId(Long idpessoa) {
-		//return pessoas.porId(idpessoa);
-		return new Pessoa();//
-	}
-
 
 }
