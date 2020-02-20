@@ -6,10 +6,10 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:o ="http://omnifaces.org/ui">
 
-    <ui:define name="titulo">#{cadastroCarroBean.editando ? 'Edição de Carro' : 'Novo Carro'}</ui:define>
+    <ui:define name="titulo">#{cadastroPessoaBean.editando ? 'Edição de Pessoa' : 'Novo Pessoa'}</ui:define>
     <f:metadata>
-    		<o:viewParam name="carro" value="#{cadastroCarroBean.carro}" />
-    		<f:event listener="#{cadastroCarroBean.inicializar}" type="preRenderView" />
+    		<o:viewParam name="pessoa" value="#{cadastroPessoaBean.pessoa}" />
+    		<f:event listener="#{cadastroPessoaBean.inicializar}" type="preRenderView" />
     	</f:metadata>
     <style>
        .sem-bordas td {
@@ -21,77 +21,48 @@
     <ui:define name="corpo">
     	
     	<h:form id="frm">
-	    	<h1>#{cadastroCarroBean.editando ? 'Edição de Carro' : 'Novo Carro'}</h1>
+	    	<h1>#{cadastroPessoaBean.editando ? 'Edição de Pessoa' : 'Nova Pessoa'}</h1>
 	    	
 	    	<p:messages autoUpdate="true" closable="true"/>
 	    		    		    	
 	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
 	    			columnClasses="rotulo, Appcampo">	
-	    			    			    		
-	    		
-	    		<p:outputLabel value="Fabricante" for="marca"/>
-	    		 <p:selectOneMenu id="marca" value="#{cadastroCarroBean.marca}" required="true"
-					converter="marca" var="i" filter="true" filterMatchMode="startsWith">
-					
-					<p:ajax event="change" process="@this" update="model"
-						listener="#{cadastroCarroBean.carregarModelos}" />
-					
-					<f:selectItem itemLabel="Selecione" itemValue="" />
-					<f:selectItems value="#{cadastroCarroBean.marcas}" var="marca"
-						itemLabel="#{marca.name}" itemValue="#{marca}" />
-											
-				</p:selectOneMenu>
-				
-				
-	    		<p:outputLabel value="Modelo" for="model"/>  	    		  	    		
-	    		
-				<p:selectOneMenu id="model" value="#{cadastroCarroBean.carro.model}" required="true">
-	    			<f:selectItem itemLabel="Selecione" />
-	    			<f:selectItems value="#{cadastroCarroBean.modelos}" var="modelo" 
-	        			itemLabel="#{modelo.name}" itemValue="#{modelo.name}" />
-				</p:selectOneMenu>
-				
-				
-				
-	    		  
-	    		<p:outputLabel value="Ano do Modelo" for="modelyear"/>
-	    		<p:inputText id="modelyear" size="10" maxlength="4" required="true" 
-	    		value="#{cadastroCarroBean.carro.modelyear}" rendered="true"/>  
-	    		
-	    		<p:outputLabel value="Categoria" for="category"/>	    		
-	    		 <p:selectOneMenu id="category" value="#{cadastroCarroBean.carro.category}" required="true">
-	    			<f:selectItem itemLabel="Selecione" />
-	    			<f:selectItems value="#{cadastroCarroBean.categorias}" var="categoria" 
-	        			itemLabel="#{categoria}" itemValue="#{categoria}" />
-				</p:selectOneMenu> 
-				
-				<p:outputLabel value="Valor diário dia da semanal" for="weekday"/>
-    			<p:inputText id="weekday" size="10" maxlength="10" styleClass="moeda" rendered="true"
-    			value="#{cadastroCarroBean.carro.weekdayaux}"/>
+
+	    		<p:outputLabel value="Nome" for="nome"/>
+	    		<p:inputText id="nome" size="60" maxlength="60" required="true" 
+	    		value="#{cadastroPessoaBean.pessoa.nome}" rendered="true"/>  
+	    						
+				<p:outputLabel value="E-mail" for="email"/>
+    			<p:inputText id="email" size="60" maxlength="60" rendered="true"
+    			value="#{cadastroPessoaBean.pessoa.email}"/>
     			
-    			<p:outputLabel value="Valor diário fim de semana" for="weekendday"/>
-    			<p:inputText id="weekendday" size="10" maxlength="10" styleClass="moeda" rendered="true"
-    			value="#{cadastroCarroBean.carro.weekenddayaux}"/>	
+    			<p:outputLabel value="Cpf" for="cpf"/>
+    			<p:inputText id="cpf" size="11" maxlength="11" rendered="true"
+    			value="#{cadastroPessoaBean.pessoa.cpf}"/>
     			
-    			<p:outputLabel value="Valor diário semanal (Cli. Fidelidade)" for="weekdayloyalty"/>
-    			<p:inputText id="weekdayloyalty" size="10" maxlength="10" styleClass="moeda" rendered="true"
-    			value="#{cadastroCarroBean.carro.weekdayloyaltyaux}"/>
+    			<p:outputLabel value="Nacionalidade" for="nacionalidade"/>
+    			<p:inputText id="nacionalidade" size="11" maxlength="11" rendered="true"
+    			value="#{cadastroPessoaBean.pessoa.nacionalidade}"/>
     			
-    			<p:outputLabel value="Valor diário fim de semana (Cli. Fidelidade)" for="weekenddayloyalty"/>
-    			<p:inputText id="weekenddayloyalty" size="10" maxlength="10" styleClass="moeda" rendered="true"
-    			value="#{cadastroCarroBean.carro.weekenddayloyaltyaux}"/>				
-				
+    			<p:outputLabel value="Naturalidade" for="naturalidade"/>
+    			<p:inputText id="naturalidade" size="11" maxlength="11" rendered="true"
+    			value="#{cadastroPessoaBean.pessoa.naturalidade}"/>
+    			    			
+				<p:outputLabel value="Data Aniversário" for="datanasc" />
+	    		<p:calendar id=""datanasc"" value="#{cadastroPessoaBean.pessoa.datanascimento}" 
+				pattern="dd/MM/yyyy" readonlyInput="true" navigator="false"
+				pages="1" mode="popup" locale="pt" />
 				
 	    		
 	    	</p:panelGrid>
 	    	<p:toolbar style="margin-top: 20px">
 	    		<p:toolbarGroup>
-	    			<p:button value="Limpar" outcome="CadastroCarro"/>
-	    			<p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroCarroBean.salvar}" />
+	    			<p:button value="Limpar" outcome="CadastroPessoa"/>
+	    			<p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroPessoaBean.salvar}" />
 	    			
 	    		</p:toolbarGroup>
 	    		<p:toolbarGroup align="right">
-	    			<p:button value="Pesquisa" outcome="PesquisaCarros"/>	    		
+	    			<p:button value="Pesquisa" outcome="PesquisaPessoas"/>	    		
 	    		</p:toolbarGroup>
 	    	</p:toolbar>
 	    </h:form>	

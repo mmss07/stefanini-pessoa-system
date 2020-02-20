@@ -20,14 +20,12 @@ public class GsonUTCDateAdapter implements JsonSerializer<Date>, JsonDeserialize
 //This is the format I need dateFormat.setTimeZone(TimeZone.getTimeZone("UTC")); //This is the key line which converts the date to UTC which cannot be accessed with the default serializer } @Override public synchronized JsonElement serialize(Date date,Type type,JsonSerializationContext jsonSerializationContext) { return new JsonPrimitive(dateFormat.format(date)); } @Override public synchronized Date deserialize(JsonElement jsonElement,Type type,JsonDeserializationContext jsonDeserializationContext) { try { return dateFormat.parse(jsonElement.getAsString()); } catch (ParseException e) { throw new JsonParseException(e); } } } 
 }
 
-	@Override
 	public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
 			throws JsonParseException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
 		// TODO Auto-generated method stub
 		return null;

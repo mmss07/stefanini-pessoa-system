@@ -11,7 +11,7 @@ public class Pessoa {
 	private static final long serialVersionUID = 1L;
 	
 
-	private long id;
+	private Long id;
 	
 	@NotNull
 	private String nome;
@@ -24,10 +24,10 @@ public class Pessoa {
 	private Date dataatualizacao;
 	private Date datanascimento;
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

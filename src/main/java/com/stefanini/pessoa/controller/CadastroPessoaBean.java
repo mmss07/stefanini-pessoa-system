@@ -11,6 +11,7 @@ import javax.inject.Named;
 import com.stefanini.pessoa.model.Pessoa;
 import com.stefanini.pessoa.security.Sha2;
 import com.stefanini.pessoa.service.CadastroPessoaService;
+import com.stefanini.pessoa.util.StringUtil;
 import com.stefanini.pessoa.util.jsf.FacesUtil;
 
 
@@ -42,8 +43,16 @@ public class CadastroPessoaBean implements Serializable{
 	
 	
 	public void salvar() throws NoSuchAlgorithmException, UnsupportedEncodingException{		
-		try {			
-			cadastroPessoaService.Salvar(pessoa);
+		try {	
+			if(pessoa != null && pessoa.getCpf() != null) {
+				if(StringUtil.isCPF(pessoa.getCpf())) {
+					
+					cadastroPessoaService.Salvar(pessoa);
+				}else {
+					FacesUtil.addErrorMessage("Cpf inválido a pessoa!");
+				}
+				
+			}
 		
 		}catch (Exception e) {
 			FacesUtil.addErrorMessage("ERRO ao Salvar a pessoa!");

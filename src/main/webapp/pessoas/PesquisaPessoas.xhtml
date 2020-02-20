@@ -51,6 +51,21 @@
 	    			<h:outputText value="#{pessoa.nacionalidade}"/>
 	    		</p:column>
 	    		
+	    		<p:outputLabel value="Data Aniversário" for="dataaniversario" />
+	    		<p:calendar id="dataaniversario" value="#{pessoa.dataaniversario}" 
+				pattern="dd/MM/yyyy" readonlyInput="true" navigator="false"
+				pages="1" mode="popup" locale="pt" />
+				
+				<p:outputLabel value="Data de cadastro" for="datacadastro" />
+	    		<p:calendar id="datacadastro" value="#{pessoa.datacadastro}" 
+				pattern="dd/MM/yyyy" readonlyInput="true" navigator="false"
+				pages="1" mode="popup" locale="pt" />
+				
+				<p:outputLabel value="Data alteração" for="dataalteracao" />
+	    		<p:calendar id="dataalteracao" value="#{pessoa.dataalteracao}" 
+				pattern="dd/MM/yyyy" readonlyInput="true" navigator="false"
+				pages="1" mode="popup" locale="pt" />
+	    		
 	    		<p:column style="width: 100px; text-align: center">	    				    		
 	    			<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()" process="@this"
 						update=":frmPesquisa:confirmacaoExclusaoDialog">

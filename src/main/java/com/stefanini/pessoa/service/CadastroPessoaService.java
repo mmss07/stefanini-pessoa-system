@@ -18,13 +18,13 @@ public class CadastroPessoaService implements Serializable{
 	
 	@Transactional
 	public void Salvar(Pessoa pessoa) throws Exception{	
-		pessoa.setId(getNextCodigo());
-		//pessoas.salvar(pessoa);			
+		pessoa.setId(nextId());
+		servicoFipeApi.salvar(pessoa);			
 	}
 		
-	public Long getNextCodigo(){				 
-		 //return pessoas.getNextCodigo();
-		return new Long(0);
+	public Long nextId(){				 
+		return servicoFipeApi.nextId();
+		
 	}
 	
 	public List<Pessoa> excluir(Pessoa pessoaselecionado, List<Pessoa> pessoasFiltrados) {
