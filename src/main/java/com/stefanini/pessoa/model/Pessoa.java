@@ -2,26 +2,34 @@ package com.stefanini.pessoa.model;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.br.CPF;
 
 
 public class Pessoa {
 
-	
-	private static final long serialVersionUID = 1L;
-	
-
 	private Long id;
 	
-	@NotNull
+	@NotEmpty
 	private String nome;
 	
+	
+	@Email
 	private String email;	
-	private String cpf;	
+	
+	@CPF
+	private String cpf;
+	
 	private String nacionalidade;
+	
 	private String naturalidade;
+	
 	private Date datacadastro;
+	
 	private Date dataatualizacao;
+	
+	@NotEmpty
 	private Date datanascimento;
 	
 	public Long getId() {
