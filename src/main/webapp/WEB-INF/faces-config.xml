@@ -7,7 +7,7 @@
     version="2.1">
     
     <application>	
-	
+		<message-bundle>com.stefanini.pessoa.Messages</message-bundle>
 		<locale-config>
 			<default-locale>pt_BR</default-locale>
 		</locale-config>
