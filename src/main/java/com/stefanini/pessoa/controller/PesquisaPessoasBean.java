@@ -49,7 +49,8 @@ public class PesquisaPessoasBean implements Serializable{
 			ExternalContext currentExternalContext = FacesContext.getCurrentInstance().getExternalContext();
 			Usuario usuario = (Usuario) currentExternalContext.getSessionMap().get("usuario");
 			if(usuario == null) {
-					FacesContext.getCurrentInstance().getExternalContext().redirect("../Login.xhtml");
+				FacesUtil.addInfoMessage("Efetue login!");
+				FacesContext.getCurrentInstance().getExternalContext().redirect("../Login.xhtml");
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

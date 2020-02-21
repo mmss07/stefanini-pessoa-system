@@ -4,7 +4,7 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui"
-    xmlns:o ="http://omnifaces.org/ui">
+    xmlns:o ="http://omnifaces.org/o">
 
     <ui:define name="titulo">#{cadastroUsuarioBean.editando ? 'Edição de Usuário' : 'Novo Usuário'}</ui:define>
     <f:metadata>
@@ -61,12 +61,7 @@
 	    	</p:toolbar>
 	    </h:form>	
     	<script>       
-        function upperTextNome() {        	
-        	document.getElementById("frm:nome").value = document.getElementById("frm:nome").value.toUpperCase();
-        }
-        function upperTextEmail() {        	
-        	document.getElementById("frm:email").value = document.getElementById("frm:email").value.toLowerCase();
-        }
+        
     </script>
     </ui:define>
 </ui:composition>

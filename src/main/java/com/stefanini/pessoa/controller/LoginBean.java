@@ -44,15 +44,6 @@ public class LoginBean implements Serializable{
 		}		
 	}
 	
-	public String timemout() {
-		ExternalContext currentExternalContext = FacesContext.getCurrentInstance().getExternalContext();
-		Usuario usuario = (Usuario) currentExternalContext.getSessionMap().get("usuario");
-		if(usuario == null) {
-			return "Login.xhtml";
-		}
-		return "";
-	}
-	
 	public String validaLogin() {
 	    String retorno = "";   
 		Sha2 sha2 = new Sha2(); 
@@ -85,6 +76,15 @@ public class LoginBean implements Serializable{
 		this.usuario = usuario;
 	}
 	
-	
+	public static void main(String[] args) {
+		Sha2 sha2 = new Sha2(); 
+		
+			try {
+				System.out.println(sha2.criptografiaSha2("**basic**"));
+			} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
 	
 }

@@ -7,7 +7,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.stefanini.pessoa.model.Pessoa;
-import com.stefanini.pessoa.util.jpa.Transactional;
 
 public class CadastroPessoaService implements Serializable{
 	
@@ -32,15 +31,18 @@ public class CadastroPessoaService implements Serializable{
 		
 	}
 	
-	public List<Pessoa> findByCpf(String cpf){
-		List<Pessoa> listaDePessoas = new ArrayList<Pessoa>();		
+	public Pessoa findByCpf(String cpf){
+		Pessoa pessoa = new Pessoa();		
 		try {
-			listaDePessoas = servicoFipeApi.findByCpf(cpf);
+			pessoa = servicoFipeApi.findByCpf(cpf);
 		    		   
 		} catch (Exception ex) {
 			ex.fillInStackTrace();
-		}		
-		return listaDePessoas;		
+		}	
+		if(pessoa.getId() == null) {
+			return null;
+		}
+		return pessoa;		
 	}
 	
 

@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.stefanini.pessoa.model.Pessoa;
+import com.stefanini.pessoa.util.StringUtil;
 import com.stefanini.pessoa.util.adapter.GsonUTCDateAdapter;
 
 public class ServicoPessoaApi implements Serializable{
@@ -100,19 +101,18 @@ public class ServicoPessoaApi implements Serializable{
 		return pessoa;
 	}
 	
-	public List<Pessoa> findByCpf(String cpf){
-		List<Pessoa> listaDePessoas = new ArrayList<Pessoa>();		
+	public Pessoa findByCpf(String cpf){
+		Pessoa pessoa = new Pessoa();		
 		try {
 			String url = "https://mmss20200712.herokuapp.com/pessoas/cpf/"+cpf;
 			String output = getConection(url,"GET");
 			Gson gson = new  GsonBuilder().registerTypeAdapter(Date.class, new GsonUTCDateAdapter()).create();
-			Type collectionType = new TypeToken<List<Pessoa>>() {}.getType();
-		    listaDePessoas = gson.fromJson(output, collectionType);
-		    		   
+			Type retorno = new TypeToken<Pessoa>() {}.getType();
+		    pessoa = gson.fromJson(output, retorno);		    		  
 		} catch (IOException ex) {
 			ex.fillInStackTrace();
-		}		
-		return listaDePessoas;		
+		}				
+		return pessoa;		
 	}
 	
 	public Pessoa findById(Long id){

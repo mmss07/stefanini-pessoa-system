@@ -52,7 +52,9 @@
 	    			<h:outputText value="#{usuario.email}" />
 	    		</p:column>	    		
 	    		<p:column style="width: 100px; text-align: center">
-	    			    			
+	    			 <p:button icon="ui-icon-pencil" title="Editar"  outcome="/usuarios/CadastroUsuario.xhtml">
+	    				<f:param name="usuario" value="#{usuario.idusuario}"/>
+	    			</p:button>			
 	    			<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()" process="@this"
 						update=":frmPesquisa:confirmacaoExclusaoDialog">
 	    				<f:setPropertyActionListener target="#{pesquisaUsuariosBean.usuarioselecionado}" 

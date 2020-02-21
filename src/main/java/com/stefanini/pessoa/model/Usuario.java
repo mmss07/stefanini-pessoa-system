@@ -31,8 +31,6 @@ public class Usuario {
 	@NotNull
 	private String senha;
 	
-	private String fidelidade;
-	
 	@Size(max = 60)
 	public String getNome() {
 		return nome;
@@ -64,14 +62,7 @@ public class Usuario {
 	}
 	public void setIdusuario(Long idusuario) {
 		this.idusuario = idusuario;
-	}
-	
-	public String getFidelidade() {
-		return fidelidade;
-	}
-	public void setFidelidade(String fidelidade) {
-		this.fidelidade = fidelidade;
-	}
+	}	
 	
 	@Override
 	public int hashCode() {

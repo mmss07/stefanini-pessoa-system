@@ -12,6 +12,7 @@ import javax.inject.Named;
 import com.stefanini.pessoa.model.Pessoa;
 import com.stefanini.pessoa.model.Usuario;
 import com.stefanini.pessoa.service.CadastroPessoaService;
+import com.stefanini.pessoa.util.StringUtil;
 import com.stefanini.pessoa.util.jsf.FacesUtil;
 
 
@@ -33,7 +34,8 @@ public class CadastroPessoaBean implements Serializable{
 	public void inicializar() {
 		if (FacesUtil.isNotPostback()) {
 					validaSessao();
-					pessoa = new Pessoa();
+					if(pessoa == null)
+						pessoa = new Pessoa();
 					System.out.println("Inicializou!");	
 		}		
 	}
@@ -43,6 +45,7 @@ public class CadastroPessoaBean implements Serializable{
 			ExternalContext currentExternalContext = FacesContext.getCurrentInstance().getExternalContext();
 			Usuario usuario = (Usuario) currentExternalContext.getSessionMap().get("usuario");
 			if(usuario == null) {
+					FacesUtil.addInfoMessage("Efetue login!");
 					FacesContext.getCurrentInstance().getExternalContext().redirect("../Login.xhtml");
 			}
 		} catch (IOException e) {
@@ -55,11 +58,13 @@ public class CadastroPessoaBean implements Serializable{
 		try {	
 			if(pessoa != null && pessoa.getCpf() != null && pessoa.getId() == null) {
 				pessoa.setId(new Long(3));
-				//if(true) {					
-					cadastroPessoaService.Salvar(pessoa);
-				//}else {
+				if(StringUtil.isCPF(pessoa.getCpf().trim().replace(".","").replace("-","").replace("/", ""))) {	
+					if(cadastroPessoaService.findByCpf(pessoa.getCpf()) ==null){						
+						cadastroPessoaService.Salvar(pessoa);
+					}
+				}else {
 					FacesUtil.addErrorMessage("Cpf inválido a pessoa!");
-				//}				
+				}				
 			}else {
 				cadastroPessoaService.alterar(pessoa);
 			}
@@ -92,7 +97,14 @@ public class CadastroPessoaBean implements Serializable{
 		return this.pessoa.getNome() != null;
 		
 	}
-		
+	
+	public static void main(String[] args) {
+		if(StringUtil.isCPF("88200442420")) {
+			System.out.println("true");
+		}else {
+			System.out.println("false");
+		}
+	}
 
 }
 
