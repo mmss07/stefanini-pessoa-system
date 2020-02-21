@@ -61,6 +61,8 @@ public class CadastroPessoaBean implements Serializable{
 				if(StringUtil.isCPF(pessoa.getCpf().trim().replace(".","").replace("-","").replace("/", ""))) {	
 					if(cadastroPessoaService.findByCpf(pessoa.getCpf()) ==null){						
 						cadastroPessoaService.Salvar(pessoa);
+					}else {
+						FacesUtil.addErrorMessage("Cpf já cadastrado!");
 					}
 				}else {
 					FacesUtil.addErrorMessage("Cpf inválido a pessoa!");

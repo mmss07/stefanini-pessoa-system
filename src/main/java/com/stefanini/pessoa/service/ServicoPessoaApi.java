@@ -73,7 +73,7 @@ public class ServicoPessoaApi implements Serializable{
 		Pessoa pessoa = new Pessoa();
 		try {
 			//String url = "http://localhost:8090/pessoas";
-			String url = "https://mmss20200712.herokuapp.com/pessoas/nextid";
+			String url = "https://mmss20200712.herokuapp.com/pessoas/nextId";
 			  
 			String output = getConection(url,"GET");			
 			Gson gson = new  GsonBuilder().registerTypeAdapter(Date.class, new GsonUTCDateAdapter()).create();
@@ -83,7 +83,7 @@ public class ServicoPessoaApi implements Serializable{
 			ex.fillInStackTrace();
 		} finally {
 		}
-		return pessoa.getId() + 1;
+		return pessoa.getId();
 	}
 	
 	public Pessoa salvar(Pessoa pessoa) throws Exception {

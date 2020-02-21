@@ -1,8 +1,6 @@
 package com.stefanini.pessoa.service;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -17,7 +15,7 @@ public class CadastroPessoaService implements Serializable{
 		
 	
 	public void Salvar(Pessoa pessoa) throws Exception{	
-		//pessoa.setId(nextId());
+		pessoa.setId(nextId());
 		servicoFipeApi.salvar(pessoa);			
 	}
 		
